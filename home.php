@@ -1,0 +1,431 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['name'])){
+    header("Location: login.php");
+    exit();
+}
+?>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medix Store</title>
+    <link rel="stylesheet" href="home_style.css">
+</head>
+<body>
+        <!-- -------------------------------------------navbar------------------------------------------ -->
+    <div class="nav">
+        <div class="nav-left">
+            <svg class="plus" viewBox="0 0 126 81" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="22" y="31" width="81" height="21" rx="8" fill="white"/>
+                <rect x="51" width="21" height="81" rx="7" fill="white"/>
+            </svg>
+            <h2>Medix</h2>
+        </div>
+        <div class="nav-search">
+            <svg class="search-icon" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M45.5291 41.2864C53.4379 31.2778 52.7719 16.7095 43.5312 7.46878C33.5729 -2.48959 17.4271 -2.48959 7.46878 7.46878C-2.48959 17.4271 -2.48959 33.5729 7.46878 43.5312C16.7095 52.7719 31.2778 53.4379 41.2864 45.5291L52.0165 56.2591C53.1881 57.4307 55.0876 57.4307 56.2591 56.2591C57.4307 55.0876 57.4307 53.1881 56.2591 52.0165L45.5291 41.2864ZM39.2886 11.7114C46.9038 19.3266 46.9038 31.6734 39.2886 39.2886C31.6734 46.9038 19.3266 46.9038 11.7114 39.2886C4.09619 31.6734 4.09619 19.3266 11.7114 11.7114C19.3266 4.0962 31.6734 4.09619 39.2886 11.7114Z" fill="#262626"/>
+            </svg>
+            <input type="text" placeholder="Search medicines, stocks....">
+        </input>
+        </div>
+       
+        <div class="nav-right">
+                <svg class="bell" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.00015 0C5.44815 0 3.00014 2.44801 3.00014 6.00002C3.00014 6.48502 3.00014 7.00002 3.00014 8.00002C3.00014 9.00003 2.83815 9.54003 2.28115 10C2.21815 10.052 1.95414 10.279 1.87514 10.344C0.610144 11.39 -0.0108564 12.37 0.000143584 14C0.00814359 15.078 0.893144 16.011 2.00014 16H6.19114C6.19114 16 6.00014 16.6111 6.00014 17.0001C6.00014 18.6571 7.34315 20.0001 9.00015 20.0001C10.6571 20.0001 12.0001 18.6571 12.0001 17.0001C12.0001 16.6111 11.8171 16 11.8171 16H16.0001C17.1041 16.003 17.9991 15.084 18.0001 14C18.0021 12.382 17.3741 11.385 16.1251 10.344C16.0431 10.275 15.7532 10.054 15.6882 10C15.1432 9.54603 15.0001 9.00003 15.0001 8.00002C15.0001 6.75002 15.0001 6.00002 15.0001 6.00002C15.0001 2.44801 12.5521 0 9.00015 0ZM9.00015 16C9.55215 16 10.0001 16.4481 10.0001 17.0001C10.0001 17.5521 9.55215 18.0001 9.00015 18.0001C8.44815 18.0001 8.00015 17.5521 8.00015 17.0001C8.00015 16.4481 8.44815 16 9.00015 16Z" fill="#B70003"/>
+                </svg>
+                
+                <div class="user">
+                    <svg class="profile" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.3999 19.2C5.86107 18.6835 8.02095 16.3067 8.65391 16.3067H15.3463C16.2635 16.3067 18.1359 18.2769 18.5999 18.9714M21.5999 12C21.5999 17.302 17.3018 21.6 11.9999 21.6C6.69797 21.6 2.3999 17.302 2.3999 12C2.3999 6.69809 6.69797 2.40002 11.9999 2.40002C17.3018 2.40002 21.5999 6.69809 21.5999 12ZM15.4387 8.72798C15.4387 6.89647 13.8926 5.40002 12.0002 5.40002C10.1078 5.40002 8.56164 6.89647 8.56164 8.72798C8.56164 10.5595 10.1078 12.0559 12.0002 12.0559C13.8926 12.0559 15.4387 10.5595 15.4387 8.72798Z" stroke="white" stroke-width="2"/>
+                    </svg>
+                    <div class="user-info">
+                        <span class="user-name"><?php echo $_SESSION['name']; ?></span>
+                        <span class="user-email"><?php echo $_SESSION['email']; ?></span>
+                    </div>
+                    
+                </div>
+        </div>
+    </div>
+    <!-- -----------------------------------------------------sidebar------------------------------------------------ -->
+    <div class="main">
+
+        <aside class="sidebar">
+            <div onclick="show('admin-profile')">Profile</div>
+            <div onclick="show('dashboard')">Dashboard</div>
+            <div onclick="show('inventory')">Inventory</div>
+            <div onclick="show('medicine')">Medicines</div>
+            <div onclick="show('billing')">Sales & Billing</div>
+            <div onclick="show('supplier')">Suppliers</div>
+            <div onclick="show('reports')">Reports</div>
+            <div class="footer" onclick="show('setting')">Setting</div>
+        </aside>
+        
+        <!-- -----------------------------------------------main-content------------------------------------------ -->
+        <div class="main-content">
+                <!-- --------------------profile-------------- -->
+            <div class="admin-profile ">
+                <h2>My Profile</h2>
+                <div class="profile-card">
+                    <div class="header">
+                        <button class="edit-btn">✏️ Edit</button>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-left">
+                            <img src="https://via.placeholder.com/120" class="profile-img">
+                            <div><h3><?php echo $_SESSION['name'];?></h3><h3><?php echo $_SESSION['email']; ?></h3></div>
+                        </div>      
+                        <div class="profile-right">
+                            <div class="account-information">
+                                <h3>Account Information</h3>
+                                <div class="one"><div class="aa"><b>Username :</b></div><span id="acc-user-name"><?php echo $_SESSION['name']; ?></span></div>
+                                <div class="one"><div class="aa"><b>Email :</b></div><span id="acc-user-email"><?php echo $_SESSION['email']; ?></span></div>
+                                <div class="one"><div class="aa"><b>Phone :</b></div><span id="acc-user-ph"></span></div>
+                            </div>
+                            <div class="personal-detail">
+                                <h3>Personal Details</h3>
+                                <div class="one"><div class="aa"><b>Full Name :</b></div><span id="acc-user-fullname"></span></div>
+                                <div class="one"><div class="aa"><b>Date of Birth :</b></div><span id="acc-user-dob"></span></div>
+                                <div class="one"><div class="aa"><b>Gender :</b></div><span id="acc-user-gender"></span></div>
+                                <div class="one"><div class="aa"><b>Location :</b></div><span id="acc-user-loc"></span></div>
+                                <div class="one"><div class="aa"><b>City :</b></div><span id="acc-user-city"></span></div>
+                                <div class="one"><div class="aa"><b>State :</b></div><span id="acc-user-state"></span></div>
+                                <div class="one"><div class="aa"><b>Pincode :</b></div><span id="acc-user-pin"></span></div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+<!------------------------ dashboard -------------------->
+            <div class="dashboard hidden">
+                <h2>Dashboard</h2>
+                <div class="card">
+                    <div class="tot-revenue">
+                        <p>Total Revenue</p>
+                        <h3>INR 5600</h3>
+                    </div>
+                    <div class="today-sale">
+                        <p>Today's Sale</p>
+                        <h3>INR 100</h3>
+                    </div>
+                    <div class="tot-med">
+                        <p>Total medicines</p>
+                        <h3>500</h3>
+                    </div>
+                    <div class="low-stock">
+                        <p>Stock alert</p>
+                        <h3>5</h3>
+                    </div>
+                    <div class="expiry-alert">
+                        <p>Expiry soon</p>
+                        <h3>2</h3>
+                    </div>
+                </div>
+            </div>
+                <!-- --------------------medicines--------------- -->
+            <div class ="medicine hidden">
+                <h2>Medicine list</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">med_id</th>
+                            <th scope="col">company</th>
+                            <th scope="col">medicine name</th>
+                            <th scope="col">category</th>
+                            <th scope="col">purchase price</th>
+                            <th scope="col">sell price</th>
+                            <th scope="col">Available quantity</th>
+                            <th scope="col">expiry</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td >101</td>
+                            <td >bbbb</td>
+                            <td>Paracetamol</td>
+                            <td>Tablet</td>
+                            <td>100$</td>
+                            <td>105$</td>
+                            <td>100</td>
+                            <td>2</td>
+                            <td><button class="edit">edit</button><button class="delete">delete</button></td>
+                        </tr>
+                        <tr>
+                            <td >102</td>
+                            <td >aaaaa</td>
+                            <td>vitamin D</td>
+                            <td>injection</td>
+                            <td>20$</td>
+                            <td>23$</td>
+                            <td>80</td>
+                            <td>1</td>
+                            <td><button class="edit">edit</button><button class="delete">delete</button></td>
+                        </tr>
+                        <tr>
+                            <td >103</td>
+                            <td >ccccc</td>
+                            <td>vitamin C</td>
+                            <td>syrup</td>
+                            <td>30$</td>
+                            <td>40$</td>
+                            <td>40</td>
+                            <td>0</td>
+                            <td><button class="edit">edit</button><button class="delete">delete</button></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>104</td>
+                            <td>ddddd</td>
+                            <td>ors</td>
+                            <td>injection</td>
+                            <td>10$</td>
+                            <td>12$</td>
+                            <td>28</td>
+                            <td>5</td>
+                            <td><button class="edit">edit</button><button class="delete">delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+
+                <!------------------- inventory ------------------>
+            <div class="inventory hidden">
+                <div class="inventory-nav">
+                    <h2>Stock management</h2>
+                    <button class="add_med_button">+ Add medicine</button>
+                </div>
+                <div class="card1">
+                    <div onclick="show1('stock-history')"><p>Stock history</p></div>
+                    <div onclick="show1('stock-purchase')"><p>Stock purchase</p></div>
+                </div>
+                <div class="stock-history hidden">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">med_id</th>
+                                <th scope="col">company</th>
+                                <th scope="col">medicine name</th>
+                                <th scope="col">category</th>
+                                <th scope="col">quantity</th>
+                                <th scope="col">Purchase date</th>
+                                <th scope="col">expiry date</th>
+                                <th scope="col">supplier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td >101</td>
+                                <td >Abbss</td>
+                                <td>Paracetamol</td>
+                                <td>Tablet</td>
+                                <td>300</td>
+                                <td>12-12-2026</td>
+                                <td>12-12-2028</td>
+                                <td>John Doe</td>
+                            </tr>
+                            <tr>
+                                <td >102</td>
+                                <td >jhkkj</td>
+                                <td>vitamin D</td>
+                                <td>injection</td>
+                                <td>9</td>
+                                <td>12-01-2024</td>
+                                <td>12-01-2029</td>
+                                <td>John Doe</td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </div>
+                <div class="stock-purchase hidden">
+                    <div class="card2"></div>
+                </div>
+                <div class="add_medicine hidden">
+                    <form action="" method="get">
+                        <label for="med_id">Medicine ID </label>
+                        <input type="number" id="med_id" required>    
+                        <label for="med_name">Medicine Name</label>
+                        <input type="text" id="med_name" required>
+                        <div class="row">
+                            <label for="quantity">Quantity <input type="number" id="quantity" required></label>
+                            <label for="cost_price">Cost price <input type="number" id="cost_price" required></label>
+                            <label for="sell_price">Sell price <input type="number" id="sell_price" required></label>
+                            <label for="expiry_date">Expiry date <input type="date" id="expiry_date" required></label>
+                        </div> 
+                        <label for="category">Category <select id="category" required>
+                            <option value="tablet">Tablet</option>
+                            <option value="capsule">Capsule</option>
+                            <option value="granules">Granules</option>
+                            <option value="syrup">Syrup</option>
+                            <option value="solution">Solution</option>
+                            <option value="inhalers">Inhalers</option>
+                            <option value="other">Others</option>
+                            </select>
+                        </label>  
+                        <div class="row">
+                            <label for="company_name">Company Name</label>
+                            <input type="text" id="company_name" required>
+                        </div>
+                        <div>
+                            <label for="supplier_name">Supplier name</label>
+                            <input type="text" id="supplier_name">
+                        </div> 
+                        <div class="row">
+                            <label for="supplier_contact">Contact </label>  <input type="tel" id="supplier_contact">
+                            <label for="email">Email </label> <input type="email">
+                        </div> 
+                        <div class="buttons">
+                            <button class="cancel">Cancel</button>
+                            <button class="ok">OK</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                <!---------------------- Billing system-------------------------- -->
+              <!-- <form action="savebill.php " method = "POST">  -->
+             <div class="billing hidden">
+                <h2>Billing System</h2>
+                <div class="billing-box">
+                    <div class="customer-form">
+                        <div><label>Customer name :</label><input type="text"  name="cname" id="cname"></div>
+                        <div><label>Phone Number :</label><input type="text" name="cphone" id="cphone"></div>
+                        <div><label>Billing Date :</label><input type="date" name="cdate" id="cdate"></div>
+                    </div>
+                    <div class="medicine-box">
+                        <table class="medicine-table">
+                            <tr>
+                                <th>Medicine Name</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>GST%</th>
+                                <th>Total</th>
+                                <th class="noprint">Action</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="Product[]"></td>
+                                <td><input type="number" class="qty" name="qty[]"></td>
+                                <td><input type="number" class="price" name="price[]"></td>
+                                <td><input type="number" class="GST" name="GST[]"></td>
+                                <td class="total">0</td>
+                                <td><button  type="button" onclick="removeRow(this)" class="remove">Remove</button></td>    
+                            </tr>
+                        </table>
+                    </div>
+                     <div class="discount-box">
+                        <label><b>Discount% : </b><input type="number" id="discountInput"></label>
+                        <button type="button" id="calbil">calculate Bill</button>
+                        <button type="button" id="add">Add Item</button>
+                    </div>
+                    <div class="payment-summary">
+                        <h3><u>Payment Summary</u></h3>
+                        <div class="row">
+                            <div>
+                                <span>Subtotal :</span> <span id="subtotal">0.00 rs.</span>
+                            </div>
+                            <div>
+                                <span>Discount :</span> <span id="Discount">0.00 rs.</span>                                                             
+                            </div>
+                            <div>
+                                <span>GST Total :</span> <span id="total">0.00 rs.</span>                           
+                            </div>
+                            <hr>
+                            <div class="grandtot">
+                                <span>Grand Total :</span> <span id="grandT">0.00rs</span>                                
+                            </div>
+                        </div>                       
+                    </div>
+                    <div class="paybutton">
+                        <button type="button" id="print">Print</button>
+                        
+                         <button type ="button" id ="save">Save</button>
+                        <button type="button" id="clear">clear</button>
+                        <!-- <button type="submit" onclick="loadHistory()" id="history"> Billing History</button>
+                        <div id="historyBox" style="display:none;">
+                         <h2>Billing History</h2>
+                         <div id="historyData"></div>
+                       </div> -->
+                    </div>
+                </div>
+            </div>
+           <!-- </form> -->
+                <!----------------------- supplier ------------------------ -->
+            <div class="supplier hidden">
+                <div class="head">
+                    <h2>Suppliers detail</h2>
+                    <div class="button"><button class="add" id="addsup" >+ Add supplier</button></div>
+                </div>               
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Pincode</th>
+                            <th>Total purchase(INR)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#1</td>
+                            <td>John Doe</td>
+                            <td>882219283</td>
+                            <td>johndoe@abc.in</td>
+                            <td>new york</td>
+                            <td>404555</td>
+                            <td>1500000</td>
+                            <td><button class="edit">Edit</button><button class="delete">Delete</button> </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <!-- ---------------report-------------- -->
+            <div class="reports hidden">
+                <h2>Reports</h2>
+                <div class="top">
+                    <div class="greenbox">
+                        <h3>TOTAL SALES</h3>
+                        <hr>
+                        <p id="sales">0 </p>
+                    </div>
+                    <div class="orangebox">
+                        <h3>TOTAL ORDERS</h3>
+                        <hr>
+                        <p id="order">0</p>
+                    </div>
+                    <div class="bluebox">
+                        <h3>LOW STOCK</h3>
+                        <hr>
+                        <p id="stock">0</p>
+                    </div>
+                    <div class="redbox">
+                        <h3>EXPIRED MEDICINES</h3>
+                        <hr>
+                        <p id="experied">0</p>
+                    </div>
+                </div>
+                <!-- <div class="smallcard">
+                                <h3>Top Selling Medicine</h3>
+
+                            </div> -->
+            </div>
+<!-- -----------*****************----------------- -->
+        </div>
+    </div>
+
+<script src="home.js"></script>
+    
+</body>
+</html>
